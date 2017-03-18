@@ -1,6 +1,30 @@
-extends layout
+doctype html
+html
+  script(src="https://code.jquery.com/jquery-3.2.0.min.js")
+  script.
+    $(document).ready(function () {
+    $.get('/time',function(result){
+    var time2 = new Date();
+    var str = result[1].toString()+' '+result[2].toString()+' ,'+result[0].toString();
+    var time = Date.parse( str );
+    var minus=time-time2.getTime();
+    setTimeout(show, 1000);
+    function show() {
+        var day = Math.floor(minus/1000/60/60/24);
+        var hour = Math.floor((minus-day*1000*60*60*24)/1000/60/60);
+        var minute = Math.floor((minus-day*1000*60*60*24-hour*1000*60*60)/1000/60);
+        var second = Math.floor((minus-day*1000*60*60*24-hour*1000*60*60-minute*1000*60)/1000)
+        $("p.time").html(day+' day '+hour+' hour '+minute+' minute '+second+' second ');
+        minus-=1000;
+        setTimeout(show, 1000);
+    }
+    });
+    });
 
-block content
-  h1= title
-  p Welcome to #{title}
-  p yyyy/mm/dd mm:ss
+  head
+    title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1= title
+    p Welcome to #{title}
+    p.time d/h/m/s

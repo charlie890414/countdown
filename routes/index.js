@@ -5,5 +5,8 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'CountDown' });
 });
+router.get('/time', function(req, res, next) {
+  res.send([2017,4,1]);
+});
 
 module.exports = router;
