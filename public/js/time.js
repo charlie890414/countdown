@@ -2,33 +2,27 @@ $(document).ready(function () {
     start();
     function start(){
         $.get('/time',function(result){
-            var starttime = new Date();
-            var str = result[1]+' '+result[2]+' ,'+result[0];
-            var time = Date.parse( str );
-            var minus=time-starttime.getTime();
-            var turn=0;
-            setTimeout(show, 0);
+            show()
             function show() {
-                var space = Math.floor(minus/1000);
-                var day = Math.floor(space/86400);
-                space-=day*86400;
-                var hour = Math.floor(space/3600);
-                space-=hour*3600;
-                var minute = Math.floor(space/60);
-                space-=minute*60;
-                var second = Math.floor(space);
+                var starttime = new Date();
+                var minus=Date.parse( result )-starttime.getTime();
+                var turn=0;
+                var second = Math.floor( (minus/1000) % 60 );
+                var minute = Math.floor( (minus/1000/60) % 60 );
+                var hour = Math.floor( (minus/(1000*60*60)) % 24 );
+                var day = Math.floor( minus/(1000*60*60*24) );
                 $("p.time").html(day+' day '+hour+' hour '+minute+' minute '+second+' second ');
-                setTimeout(countDownStart, 0);
+                return minus;
             }
-            function countDownStart(){
-                turn+=1;
-                var offset = new Date().getTime() - (starttime.getTime() + turn*1000);
-                var nextTime = 1000 - offset;
-                if (nextTime < 0) { nextTime = 0 };
-                minus -= 1000;
-                console.log("誤差：" + offset + "ms，下一次執行：" + nextTime + "ms後，離開始還有：" + minus + "ms");
-                setTimeout(show,nextTime);
+            function updateClock(){
+              var t = show();
+              if(t<=0){
+                clearInterval(timeinterval);
+              }
             }
+            updateClock(); // run function once at first to avoid delay
+            var timeinterval = setInterval(updateClock,1000);
+            
         })
     }
 });
