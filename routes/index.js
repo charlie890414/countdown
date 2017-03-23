@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 router.get('/time', function(req, res, next) {
-  res.send('2017/03/24');
+  res.send('2017/04/01');
 });
 
 module.exports = router;

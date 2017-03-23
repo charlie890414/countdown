@@ -17,12 +17,12 @@ $(document).ready(function () {
             function updateClock(){
               var t = show();
               if(t<=0){
+                $("p.time").html('time\'s up');
                 clearInterval(timeinterval);
               }
             }
             updateClock(); // run function once at first to avoid delay
             var timeinterval = setInterval(updateClock,1000);
-
         })
     }
 });
