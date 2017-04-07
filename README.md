@@ -1,3 +1,6 @@
 # countdown
+#work on:
 
-https://ssinrc-countdown.herokuapp.com/
+* https://countdown.charlie890414.com/
+
+* https://ssinrc-countdown.herokuapp.com/
